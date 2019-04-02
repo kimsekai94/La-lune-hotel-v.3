@@ -1,6 +1,9 @@
 #include <iostream>
 #include <stdlib.h>
 #include <windows.h>
+#include <sstream>
+#include <fstream>
+#include <string>
 
 using namespace std;
 
@@ -12,6 +15,97 @@ void bluetext (){SetConsoleTextAttribute(hConsole, 11);  };
 void yellowtext (){SetConsoleTextAttribute(hConsole, 14);  };
 void darktext (){SetConsoleTextAttribute(hConsole, 8);  };
 
+
+bool MenuLoop = true;
+string name ("*****");    
+string surname ("*****");
+int address1 (00);
+string address2 ("*****");
+string address3 ("*****");
+string address4 ("*****");
+string postcode ("*****");
+string tel ("00");
+int creditcardSelection;
+string creditcardType("*****");
+string creditcard("****"); 
+
+void resetMemberDetails(){
+     name =     "*****";
+     surname =  "*****";
+     address1 = 00;
+     address2 = "*****";
+     address3 = "*****";
+     address4 = "*****";
+     postcode = "*****";
+     tel = "00";
+     creditcard = "****";
+     creditcardType   = "*****";
+ 
+}
+void MemberForm(){
+ 
+    system ("cls");
+    bluetext();
+    cout << "\t\t\t      Member Details\n";
+    whitetext();
+    cout << "\t________________________________________________________________\n\n";
+    cout << "\tMember Form   \t";
+    cout << "\t  Member: ";
+    if (name != "*****"){greentext();};   // If the field is not the default
+    cout << name << " ";                  // value use green text, then
+    whitetext();                          // revert back to white text.
+    if (surname != "*****"){greentext();};
+    cout << surname << "\n";
+    whitetext();
+    cout << "\t\t\t";
+    cout << "\t Address: ";
+    if (address1 != 00){greentext();};
+    cout << address1 << " ";
+    whitetext();
+    if (address2 != "*****"){greentext();};
+    cout << address2 << "\n";
+    whitetext();
+    cout << "\t\t";
+    cout << "\t\t          ";
+    if (address3 != "*****"){greentext();};
+    cout << address3 << "\n";
+    whitetext();
+    cout << "\t\t\t\t          ";
+    if (address4 != "*****"){greentext();};
+    cout << address4 << "\n";
+    whitetext();
+    cout << "\t\t\t\t          ";
+    if (postcode != "*****"){greentext();};
+    cout << postcode << "\n";
+    whitetext();
+    cout << "\t\t\t   Telephone: ";
+    if (tel != "00"){greentext();};
+    cout << tel;
+    whitetext();
+    cout << "\n";
+    cout << "\t________________________________________________________________\n\n";
+    cout << "\t\t           Credit card: ";
+    if (creditcard != "****"){greentext();};
+    cout << creditcard;
+    whitetext();
+    cout << "\n\t\t         Credit card Type: ";
+    if(creditcard == "No"){
+        greentext();
+        creditcardType = "No";
+    }
+    if (creditcardType != "*****"){greentext();};
+    cout << creditcardType;
+    whitetext();
+    cout << "\n\t________________________________________________________________\n\n";
+    cout << "\n";
+};
+ 
+// Save function for saving member details to a file
+void savefile(){
+    string saveFileName;
+    stringstream out;
+    out << name << " " << surname;
+    
 void createBooking(){}
 void billpayment(){}
 void priceList(){}
