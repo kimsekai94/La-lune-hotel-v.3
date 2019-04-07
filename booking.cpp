@@ -79,7 +79,7 @@ void bookingForm(){
 };
 
 void bookingScript(){
-
+    string saveYN;  
     char Parking ;
     double parkingCost ;
     do {
@@ -244,12 +244,15 @@ void bookingScript(){
             cout << "You entered an invalid answer. Please enter 'Y' for yes or 'N' for no.";
         }
         } while (   breakfast != 'Y' && breakfast != 'y' && breakfast != 'N' && breakfast != 'n');
-
+    bookingForm();
+    cout << "\tSave these details to a file? <Yes/No> ";
+    cin >> saveYN;
+    }
 
     
         
    
-}
+
 int main(){
     bookingScript();
 }
