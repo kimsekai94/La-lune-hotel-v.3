@@ -245,7 +245,7 @@ void bookingScript(){
         }
         } while (   breakfast != 'Y' && breakfast != 'y' && breakfast != 'N' && breakfast != 'n');
     bookingForm();
-    cout << "\tSave these details to a file? <Yes/No> ";
+    cout << "\tSave these detail\s to a file? <Yes/No> ";
     cin >> saveYN;
     }
 
