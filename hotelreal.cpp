@@ -17,7 +17,7 @@ using namespace std;
 
 bool Menupricelist = true;
 int number;
-//Class Customer
+
 class Customer
 {
     public:
@@ -49,7 +49,7 @@ class Room
     void displayRoom(Room);
 };
 
-//Global Declarations
+
 class Room rooms[max];
 int count=0;
 
@@ -110,7 +110,7 @@ void Room::displayRoom(Room tempRoom)
     cout<<"\n\t\tRent : "<<tempRoom.rent;
 }
 
-//hotel management class
+
 class HotelMgnt:protected Room
 {
     public:
@@ -145,7 +145,7 @@ void HotelMgnt::guestSummaryReport(){
     getch();
 }
 
-//hotel management reservation of room
+
 void HotelMgnt::checkIn(){
     system("cls");
 
@@ -256,4 +256,86 @@ void HotelMgnt::checkIn(){
         getch();
         
     }
+}
+void HotelMgnt::getAvailRoom(){
+    system("cls");
+    int i,found=0;
+        for(i=0;i<count;i++){
+            if(rooms[i].status==0){
+                displayRoom(rooms[i]);
+                greentext();
+                cout<<"\n\n\t\tPress enter for next room";
+                whitetext();
+                found=1;
+                getch();
+            }
+        }if(found==0){
+            redtext();
+        cout<<"\n\t\tAll rooms are reserved";
+        getch();
+        
+        }
+}
+
+
+void HotelMgnt::searchCustomer(char *pname){
+    system("cls");
+        int i,found=0;
+        for(i=0;i<count;i++){
+            if(rooms[i].status==1 && stricmp(rooms[i].cust.name,pname)==0){
+                cout<<"\n\t\tCustomer Name: "<<rooms[i].cust.name;
+                cout<<"\n\t\tRoom Number: "<<rooms[i].roomNumber;
+                greentext();
+                cout<<"\n\n\t\tPress enter for next record";
+                found=1;
+                getch();
+            }
+        }if(found==0)
+        {
+            redtext();
+        cout<<"\n\t\tPerson not found.";
+        getch();
+        
+        }
+}
+
+
+void HotelMgnt::checkOut(int roomNum)
+{       system("cls");
+        int i,found=0,days,rno;
+        float billAmount=0;
+        for(i=0;i<count;i++){
+            if(rooms[i].status==1 && rooms[i].roomNumber==roomNum){
+            
+            found=1;
+            
+            break;
+            }
+        }if(found==1)
+        {   
+
+            cout<<"\n\t\tEnter Number of Days (How many do you stay):\t";
+            cin>>days;
+            billAmount= (days * rooms[i].rent) + rooms[i].cust.ServiceCharge;
+            cout<<"\t\t=============================================\n";
+            bluetext();
+            cout<<"\t\t                CheckOut Details \n";
+            whitetext();
+            cout<<"\t\t=============================================\n";
+            cout<<"\n\t\tBooking ID : "<<rooms[i].cust.booking_id;
+            cout<<"\n\t\tCustomer Name : "<<rooms[i].cust.name;
+            cout<<"\n\t\tRoom Number : "<<rooms[i].roomNumber;
+            cout<<"\n\t\tAddress : "<<rooms[i].cust.address;
+            cout<<"\n\t\tPhone : "<<rooms[i].cust.phone;
+            cout<<"\n\t\tEnter Check In Date (DD-MM-YY): "<<rooms[i].cust.from_date;
+            cout<<"\n\t\tEnter Check Out Date (DD-MM-YY): "<<rooms[i].cust.to_date;
+            cout<<"\n\t\tTotal ServiceCharge: " << rooms[i].cust.ServiceCharge <<" baht";
+            cout<<"\n\t\tTotal Amount Due : "<<billAmount <<" baht";
+            cout<<"\n\t\tAdvance Paid(discount): "<<rooms[i].cust.payment_advance<<" %";
+            cout<<"\n\t\t*** Total Payable: "<< billAmount*rooms[i].cust.payment_advance<<" baht ";
+
+            rooms[i].status=0;
+        }
+    getch();
+    
 }
