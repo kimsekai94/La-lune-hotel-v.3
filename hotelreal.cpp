@@ -123,7 +123,7 @@ class HotelMgnt:protected Room
 
 
 
-void HotelMgnt::guestSummaryReport(){
+
 
     if(count==0){
         redtext();
