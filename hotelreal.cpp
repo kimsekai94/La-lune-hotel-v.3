@@ -1,4 +1,5 @@
 #include<iostream>
+#include <ctime>
 #include<string.h>
 #include<conio.h>
 #include<windows.h>
@@ -26,6 +27,7 @@ class Customer
     char from_date[20];
     char to_date[20];
     float payment_advance;
+    double ServiceCharge;
     int booking_id;
 };
 
