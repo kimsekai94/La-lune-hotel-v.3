@@ -1,5 +1,5 @@
+
 #include<iostream>
-#include <ctime>
 #include<string.h>
 #include<conio.h>
 #include<windows.h>
@@ -17,7 +17,7 @@ using namespace std;
 
 bool Menupricelist = true;
 int number;
-
+//Class Customer
 class Customer
 {
     public:
@@ -156,7 +156,6 @@ void HotelMgnt::checkIn(){
     double parkingCost;
     double gymCost;
 
-
     class Room room;
     cout<<"\n\t\tEnter Room number : ";
     cin>>rno;
@@ -172,12 +171,13 @@ void HotelMgnt::checkIn(){
             return;
         }
 
-        cout<<"\n\t\tEnter booking id(Number 4 digit): ";
+        cout<<"\n\t\tEnter booking id (Number 4 digit) : ";
         rooms[i].cust.booking_id =rand()%8999+1000;
         cout <<  rooms[i].cust.booking_id <<"\n";
 
         cout<<"\n\t\tEnter Customer Name (First Name): ";
-        cin>>rooms[i].cust.name;
+        /*cin>>rooms[i].cust.name;*/
+        cin >> rooms[i].cust.name;
 
         cout<<"\n\t\tEnter Address (only city): ";
         cin>>rooms[i].cust.address;
@@ -190,8 +190,8 @@ void HotelMgnt::checkIn(){
 
         cout<<"\n\t\tEnter Check Out Date (DD-MM-YY): ";
         cin>>rooms[i].cust.to_date;
-        
-        cout <<"\n\t\tEnter Service : ";
+
+         cout <<"\n\t\tEnter Service : ";
         do {
         cout << "\n\t\tDo you want a parking spot during your stay? ";
         cin >> Parking;
@@ -230,9 +230,9 @@ void HotelMgnt::checkIn(){
 
         do{
             cout<<"\n\t\tEnter  your Type of Creditcard : ";
-            cout<<"\n\t\t\t[1] GSB (- 90 % )";
-            cout<<"\n\t\t\t[2] KTB (- 85 % )";
-            cout<<"\n\t\t\t[3] SCB (- 60 % )";
+            cout<<"\n\t\t\t[1] GSB (- 10 % )";
+            cout<<"\n\t\t\t[2] KTB (- 15 % )";
+            cout<<"\n\t\t\t[3] SCB (- 40 % )";
             cout<<"\n\t\t\t[4] No Creditcard ";
             cout<<"\n\t\tEnter  your Type of Creditcard : ";
             cin>>j;
@@ -245,9 +245,6 @@ void HotelMgnt::checkIn(){
             if (j == "4"){
                 rooms[i].cust.payment_advance = 1.0; };
         }while (j!= "1" && j!= "2" && j!= "3" && j!= "4" );
-      
-        
-        
 
         rooms[i].status=1;
         greentext();
@@ -257,6 +254,9 @@ void HotelMgnt::checkIn(){
         
     }
 }
+
+
+
 void HotelMgnt::getAvailRoom(){
     system("cls");
     int i,found=0;
@@ -276,6 +276,7 @@ void HotelMgnt::getAvailRoom(){
         
         }
 }
+
 
 
 void HotelMgnt::searchCustomer(char *pname){
@@ -300,15 +301,16 @@ void HotelMgnt::searchCustomer(char *pname){
 }
 
 
+
 void HotelMgnt::checkOut(int roomNum)
 {       system("cls");
         int i,found=0,days,rno;
         float billAmount=0;
         for(i=0;i<count;i++){
             if(rooms[i].status==1 && rooms[i].roomNumber==roomNum){
-            
+            //rno = rooms[i].roomNumber;
             found=1;
-            
+            //getch();
             break;
             }
         }if(found==1)
@@ -316,7 +318,7 @@ void HotelMgnt::checkOut(int roomNum)
 
             cout<<"\n\t\tEnter Number of Days (How many do you stay):\t";
             cin>>days;
-            billAmount= (days * rooms[i].rent) + rooms[i].cust.ServiceCharge;
+            billAmount=days * rooms[i].rent;
             cout<<"\t\t=============================================\n";
             bluetext();
             cout<<"\t\t                CheckOut Details \n";
@@ -339,3 +341,240 @@ void HotelMgnt::checkOut(int roomNum)
     getch();
     
 }
+
+
+//managing rooms (adding and searching available rooms)
+void manageRooms()
+{
+        class Room room;
+        int opt,rno,i,flag=0;
+        char ch;
+        do
+        {
+            system("cls");
+            whitetext();
+            cout<<"\t\t=============================================\n";
+            bluetext();
+            cout<<"\t\t                Manage Rooms\n";
+            whitetext();
+            cout<<"\t\t=============================================\n";
+            cout<<"\n\t\t\t1 - Add Room";
+            cout<<"\n\t\t\t2 - Search Room";
+            cout<<"\n\t\t\t3 - Back to Main Menu";
+            cout<<"\n\n\t\tPlease choose an option : ";
+            cin>>opt;
+        //switch statement
+        switch(opt){
+        case 1:
+            cout<<"\n\t\tEnter Room Number: ";
+            cin>>rno;
+            i=0;
+            for(i=0;i<count;i++){
+                if(rooms[i].roomNumber==rno)
+                {flag=1;}
+            }if(flag==1){
+                redtext();
+                cout<<"\n\t\tRoom Number is Present.\n\t\tPlease enter unique Number";
+                flag=0;
+                getch();
+            }else{
+            rooms[count]=room.addRoom(rno);
+            count++;
+            }
+            break;
+        case 2:
+            cout<<"\n\t\tEnter room number: ";
+            cin>>rno;
+            room.searchRoom(rno);
+            break;
+        case 3:
+            //nothing to do
+            break;
+            default:
+            cout<<"\n\t\tPlease Enter correct option";
+            break;
+            }
+            }while(opt!=3);
+}
+void mainofpricelist(){
+    
+    system ("cls");
+    cout << "\t\tView of pricelist\n\n";
+    cout << "1 - Detail of Room\n\n";
+    cout << "2 - Back to Main menu\n\n";
+    cout << "Please select a number of page: ";
+    cin >> number;
+
+     
+}
+
+void backtomainmenu(){
+    Menupricelist == false;
+}
+void priceList(){
+    
+    mainofpricelist();
+    switch(number){
+        case 1:
+
+    system ("cls");
+   
+    cout << "\tPrice List\n\n";
+ 
+    cout << "\t\t\t\t\tDetail of Rooms\n\n\t";
+
+    cout << "\t\tRoom No\t\t    AC/Non-AC \t\t   Single/Double\t\t   Big/Small \t\t   Price";
+    cout << "\n\n\t\t\t  101      \x9c\t\t  "<<"AC"<<setw(26)<<"Single" <<setw(29)<<"Big"<<setw(22)<<"4000 "<<"Baht";
+    cout << "\n\n\t\t\t  102      \x9c\t\t  "<<"AC"<<setw(26)<<"Single" <<setw(29)<<"Big"<<setw(22)<<"4000 "<<"Baht";
+    cout << "\n\n\t\t\t  103      \x9c\t\t  "<<"AC"<<setw(26)<<"Single" <<setw(29)<<"Small"<<setw(22)<<"3000 "<<"Baht";
+    cout << "\n\n\t\t\t  104      \x9c\t\t  "<<"AC"<<setw(26)<<"Single" <<setw(29)<<"Small"<<setw(22)<<"3000 "<<"Baht";
+    cout << "\n\n\t\t\t  201      \x9c\t\t  "<<"AC"<<setw(26)<<"Double" <<setw(29)<<"Big"<<setw(22)<<"6000 "<<"Baht";
+    cout << "\n\n\t\t\t  202      \x9c\t\t  "<<"AC"<<setw(26)<<"Double" <<setw(29)<<"Big"<<setw(22)<<"6000 "<<"Baht";
+    cout << "\n\n\t\t\t  203      \x9c\t\t  "<<"AC"<<setw(26)<<"Double" <<setw(29)<<"Small"<<setw(22)<<"5000 "<<"Baht";
+    cout << "\n\n\t\t\t  204      \x9c\t\t  "<<"AC"<<setw(26)<<"Double" <<setw(29)<<"Small"<<setw(22)<<"5000 "<<"Baht";
+    cout << "\n\n\t\t\t  301      \x9c\t  "<<setw(12)<<"Non-AC"<<setw(24)<<"Single" <<setw(29)<<"Big"<<setw(22)<<"3500 "<<"Baht";
+    cout << "\n\n\t\t\t  302      \x9c\t  "<<setw(12)<<"Non-AC"<<setw(24)<<"Single" <<setw(29)<<"Big"<<setw(22)<<"3500 "<<"Baht";
+    cout << "\n\n\t\t\t  303      \x9c\t  "<<setw(12)<<"Non-AC"<<setw(24)<<"Single" <<setw(29)<<"Small"<<setw(22)<<"2500 "<<"Baht";
+    cout << "\n\n\t\t\t  304      \x9c\t  "<<setw(12)<<"Non-AC"<<setw(24)<<"Single" <<setw(29)<<"Small"<<setw(22)<<"2500 "<<"Baht";
+    cout << "\n\n\t\t\t  401      \x9c\t  "<<setw(12)<<"Non-AC"<<setw(24)<<"Double" <<setw(29)<<"Big"<<setw(22)<<"5500 "<<"Baht";
+    cout << "\n\n\t\t\t  402      \x9c\t  "<<setw(12)<<"Non-AC"<<setw(24)<<"Double" <<setw(29)<<"Big"<<setw(22)<<"5500 "<<"Baht";
+    cout << "\n\n\t\t\t  403      \x9c\t  "<<setw(12)<<"Non-AC"<<setw(24)<<"Double" <<setw(29)<<"Small"<<setw(22)<<"4500 "<<"Baht";
+    cout << "\n\n\t\t\t  404      \x9c\t  "<<setw(12)<<"Non-AC"<<setw(24)<<"Double" <<setw(29)<<"Small"<<setw(22)<<"4500 "<<"Baht\n\n";
+   
+    system ("pause");
+    mainofpricelist();
+    getch();
+    
+        case 2:
+    backtomainmenu();
+    }
+
+
+ 
+
+}
+
+void welcome();
+int main(){
+     class HotelMgnt hm;
+     int i,j,opt,rno;
+     char ch;
+     char pname[100];
+     welcome();
+     system("cls");
+
+     do{
+            system("cls");
+            bluetext();
+            cout << "\t\t\t\tMain Menu\n\n";
+            whitetext();
+            cout<<"\n\t\t\t0 - View Price Room";
+            cout<<endl;
+            cout<<"\n\t\t\t1 - Manage Rooms";
+            cout<<endl;
+            cout<<"\n\t\t\t2 - Check-In Room";
+            cout<<endl;
+            cout<<"\n\t\t\t3 - Available Rooms";
+            cout<<endl;
+            cout<<"\n\t\t\t4 - Search Customer";
+            cout<<endl;
+            cout<<"\n\t\t\t5 - Check-Out Room";
+            cout<<endl;
+            cout<<"\n\t\t\t6 - Guest Summary Report";
+            cout<<endl;
+            cout<<"\n\t\t\t7 - Exit";
+            cout<<endl;
+            cout<<"\n\n\t\t\tPlease choose an option : ";
+            cin>>opt;
+            switch(opt){
+                case 0:
+                    priceList();
+                    break;
+                case 1:
+                    manageRooms();
+                    break;
+                case 2:
+                    if(count==0){
+                        redtext();
+                        cout<<"\n\t\tRooms data is not available.";
+                        greentext();
+                        cout<<"\n\t\tPlease add the rooms first.";
+                        getch();
+                    }else hm.checkIn();
+                    break;
+                case 3:
+                    if(count==0){
+                        redtext();
+                        cout<<"\n\t\tRooms data is not available.";
+                        greentext();
+                        cout<<"\n\t\tPlease add the rooms first.";
+                        getch();
+                    }else hm.getAvailRoom();
+                    break;
+                case 4:
+                    if(count==0) {
+                        redtext();
+                        cout<<"\n\t\tRooms data is not available.";
+                        greentext();
+                        cout<<"\n\t\tPlease add the rooms first.";
+                        getch();
+                    }else{
+                        cout<<"\t\tEnter Customer Name: ";
+                        cin>>pname;
+                        hm.searchCustomer(pname);
+                    }
+                    break;
+                case 5:
+                    if(count==0){
+                        redtext();
+                        cout<<"\n\t\tRooms data is not available.";
+                        greentext();
+                        cout<<"\n\t\tPlease add the rooms first.";
+                        getch();
+                    }else{
+                        cout<<"\t\tEnter Room Number : ";
+                        cin>>rno;
+                        hm.checkOut(rno);
+                        
+                        
+                    }
+                    break;
+                case 6:
+                    hm.guestSummaryReport(); 
+                    break;
+                case 7:
+                    greentext();
+                    cout<<"\n\t\tTHANK YOU! FOR RESERVATION";
+                    break;
+                    default:
+                    cout<<"\n\t\tPlease Enter correct option";
+                    break;
+            }
+            }while(opt!=7);
+
+             getch();
+}
+void welcome(){
+    bluetext();
+    cout << "\n\n\n\t\t\t\t---------------------------------------------------\n";
+    cout <<       "\t\t\t\t|  *********************************************  |\n";
+    cout <<       "\t\t\t\t|  *                                           *  |\n";
+    cout <<       "\t\t\t\t|  *                                           *  |\n";
+    cout <<       "\t\t\t\t|  *                                           *  |\n";
+    cout <<       "\t\t\t\t|  *                WELCOME to                 *  |\n";
+    cout <<       "\t\t\t\t|  *                MAJA hotel                 *  |\n";
+    cout <<       "\t\t\t\t|  *                                           *  |\n";
+    cout <<       "\t\t\t\t|  *                                           *  |\n";
+    cout <<       "\t\t\t\t|  *                                           *  |\n";
+    cout <<       "\t\t\t\t|  *********************************************  |\n";
+    cout <<       "\t\t\t\t---------------------------------------------------\n";
+    whitetext();
+    cout <<       "\n\n\t\t\t\t            >";
+    cout << "   Main menu \n";
+    greentext();
+    cout << "\t\t\t\t   press enter in order to approach Main menu... ";
+    cin.get(); 
+
+}
+
+
