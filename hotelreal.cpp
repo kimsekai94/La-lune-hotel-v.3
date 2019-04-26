@@ -120,3 +120,141 @@ class HotelMgnt:protected Room
     void checkOut(int);
     void guestSummaryReport();
 };
+
+
+
+void HotelMgnt::guestSummaryReport(){
+
+    if(count==0){
+        redtext();
+        cout<<"\n\t\t No Guest in Hotel !!";
+    } 
+    for(int i=0;i<count;i++){
+        if(rooms[i].status==1){
+            cout<<"\n\t\t Customer Name : "<<rooms[i].cust.name;
+            cout<<"\n\t\t Room Number : "<<rooms[i].roomNumber;
+            cout<<"\n\t\t Address (only city) : "<<rooms[i].cust.address;
+            cout<<"\n\t\t Phone : "<<rooms[i].cust.phone;
+            cout<<"\n\t\t Enter Check In Date (DD-MM-YY): "<<rooms[i].cust.from_date;
+            cout<<"\n\t\t Enter Check Out Date (DD-MM-YY): "<<rooms[i].cust.to_date;
+            greentext();
+            cout<<"\n\t\t==================================================================="; 
+            whitetext();
+        }
+    
+    }
+    getch();
+}
+
+//hotel management reservation of room
+void HotelMgnt::checkIn(){
+    system("cls");
+
+    int i,found=0,rno,k;
+    string j;
+    char Parking ; 
+    char gym;
+    double parkingCost;
+    double gymCost;
+
+
+    class Room room;
+    cout<<"\n\t\tEnter Room number : ";
+    cin>>rno;
+    for(i=0;i<count;i++){
+        if(rooms[i].roomNumber==rno){
+            found=1;
+            break;}
+    }if(found==1){
+        if(rooms[i].status==1){
+            redtext();
+            cout<<"\n\t\tRoom is already Booked";
+            getch();
+            return;
+        }
+
+        cout<<"\n\t\tEnter booking id(Number 4 digit): ";
+        rooms[i].cust.booking_id =rand()%8999+1000;
+        cout <<  rooms[i].cust.booking_id <<"\n";
+
+        cout<<"\n\t\tEnter Customer Name (First Name): ";
+        cin>>rooms[i].cust.name;
+
+        cout<<"\n\t\tEnter Address (only city): ";
+        cin>>rooms[i].cust.address;
+
+        cout<<"\n\t\tEnter Phone: ";
+        cin>>rooms[i].cust.phone;
+
+        cout<<"\n\t\tEnter Check In Date (DD-MM-YY): ";
+        cin>>rooms[i].cust.from_date;
+
+        cout<<"\n\t\tEnter Check Out Date (DD-MM-YY): ";
+        cin>>rooms[i].cust.to_date;
+        
+        cout <<"\n\t\tEnter Service : ";
+        do {
+        cout << "\n\t\tDo you want a parking spot during your stay? ";
+        cin >> Parking;
+        if (Parking == 'Y' || Parking == 'y'){
+
+            parkingCost = 20;
+            break;
+        }
+        else if (Parking == 'N' || Parking == 'n'){
+            parkingCost = 0;
+            break;
+        }
+        else{
+            cout << "\n\t\tYou entered an invalid answer. Please enter 'Y' for yes or 'N' for no.\n";
+        }
+        }while (Parking != 'Y' && Parking != 'y' && Parking != 'N' && Parking != 'n');
+        
+        
+        do {
+        cout << "\n\t\tDo you want a high speed internet during your stay? ";
+        cin >> gym;
+        if (gym == 'Y' || gym == 'y'){
+            gymCost = 50;
+            break;
+        }
+        else if (gym == 'N' || gym == 'n'){
+            gymCost = 0;
+            break;
+        }
+        else{
+            cout << "\n\t\tYou entered an invalid answer. Please enter 'Y' for yes or 'N' for no.";
+        } 
+        }while (   gym != 'Y' && gym != 'y' && gym != 'N' && gym != 'n');
+
+        rooms[i].cust.ServiceCharge = parkingCost + gymCost;
+
+        do{
+            cout<<"\n\t\tEnter  your Type of Creditcard : ";
+            cout<<"\n\t\t\t[1] GSB (- 90 % )";
+            cout<<"\n\t\t\t[2] KTB (- 85 % )";
+            cout<<"\n\t\t\t[3] SCB (- 60 % )";
+            cout<<"\n\t\t\t[4] No Creditcard ";
+            cout<<"\n\t\tEnter  your Type of Creditcard : ";
+            cin>>j;
+            if (j == "1"){
+                rooms[i].cust.payment_advance = 0.9; };
+            if (j == "2"){
+                rooms[i].cust.payment_advance = 0.85; };
+            if (j == "3"){
+                rooms[i].cust.payment_advance = 0.6; };
+            if (j == "4"){
+                rooms[i].cust.payment_advance = 1.0; };
+        }while (j!= "1" && j!= "2" && j!= "3" && j!= "4" );
+      
+        
+        
+
+        rooms[i].status=1;
+        greentext();
+        cout<<"\n\t\t Customer Checked-in Successfully..";
+        
+        getch();
+        
+    }
+}
